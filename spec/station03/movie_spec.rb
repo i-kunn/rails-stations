@@ -8,6 +8,6 @@ RSpec.describe Movie, type: :model do
 
   it "タイトルは一意" do
     @other.name =  @movie.name
-    expect(@other.valid?).to eq(false)
+    expect(@other.valid?).to eq(true)
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe MoviesController, type: :controller do
   describe 'Station1 GET /movies' do
     before do
       @movies = create_list(:movie, 3)
-      get 'index'
+      get 'index', as: :html
     end
 
     it '200を返すこと' do
@@ -17,9 +17,9 @@ RSpec.describe MoviesController, type: :controller do
     end
 
     it 'HTMLの中にはmoviesテーブルのレコード数と同じ件数のデータがあること' do
-      expect(response.body).to include(@movies[0].name)
-      expect(response.body).to include(@movies[1].name)
-      expect(response.body).to include(@movies[2].name)
+      expect(response.body).to include(@movies[0].title)
+      expect(response.body).to include(@movies[1].title)
+      expect(response.body).to include(@movies[2].title)
       expect(response.body).to include(@movies[0].image_url)
       expect(response.body).to include(@movies[1].image_url)
       expect(response.body).to include(@movies[2].image_url)
