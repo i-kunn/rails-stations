@@ -1,0 +1,11 @@
+<h1>スケジュール一覧</h1>
+
+<% @schedules.each do |schedule| %>
+  <h2><%= schedule.movie.name %></h2>
+  <p>
+    <%= schedule.start_time.strftime('%Y/%m/%d %H:%M') %> 〜 
+    <%= schedule.end_time.strftime('%H:%M') %>
+    <%= link_to "編集", edit_admin_schedule_path(schedule) %>
+    <%= link_to "削除", admin_schedule_path(schedule), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+  </p>
+<% end %>

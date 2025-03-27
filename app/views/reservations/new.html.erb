@@ -1,0 +1,22 @@
+<h1>予約フォーム</h1>
+
+<%= form_with model: @reservation, url: reservations_path, local: true do |form| %>
+  <%= form.hidden_field :movie_id, value: @movie_id %>
+  <%= form.hidden_field :schedule_id, value: @schedule_id %>
+  <%= form.hidden_field :sheet_id, value: @sheet_id %>
+  <%= form.hidden_field :date, value: @date %>
+
+  <div>
+    <%= form.label :name, "名前" %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :email, "メールアドレス" %><br>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
+    <%= form.submit "予約する" %>
+  </div>
+<% end %>

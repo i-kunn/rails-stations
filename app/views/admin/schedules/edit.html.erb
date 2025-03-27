@@ -1,0 +1,15 @@
+<h1>スケジュール編集</h1>
+
+<%= form_with model: [:admin, @schedule], local: true do |form| %>
+  <div>
+    <%= form.label :start_time, "開始時刻" %><br>
+    <%= form.datetime_select :start_time %>
+  </div>
+
+  <div>
+    <%= form.label :end_time, "終了時刻" %><br>
+    <%= form.datetime_select :end_time %>
+  </div>
+
+  <%= form.submit "更新する" %>
+<% end %>

@@ -1,0 +1,11 @@
+<h1><%= @movie.name %></h1>
+<%= image_tag @movie.image_url if @movie.image_url.present? %>
+<p><%= @movie.description %></p>
+<p><%= @movie.year %>年</p>
+
+<h2>上映スケジュール</h2>
+<ul>
+  <% @schedules.each do |schedule| %>
+    <li><%= schedule.start_time.strftime("%Y/%m/%d %H:%M") %> ～ <%= schedule.end_time.strftime("%H:%M") %></li>
+  <% end %>
+</ul>

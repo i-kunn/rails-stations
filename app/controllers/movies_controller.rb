@@ -21,4 +21,22 @@ class MoviesController < ApplicationController
       format.json { render json: @movies }
     end
   end
+  def show
+    @movie = Movie.find(params[:id])
+    @schedules = @movie.schedules
+  end
+  def reservation
+    @movie = Movie.find(params[:id])
+    @sheets = Sheet.all
+    @date = params[:date]
+  
+    # date, schedule_id がない場合は redirect
+    if @date.blank? || params[:schedule_id].blank?
+      redirect_to movies_path, alert: "不正なアクセスです"
+      return
+    end
+  
+    @schedule = Schedule.find_by(id: params[:schedule_id])
+  end  
 end
+

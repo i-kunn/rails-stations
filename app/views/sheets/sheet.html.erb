@@ -1,0 +1,22 @@
+<h1>|| スクリーン1 ||</h1>
+
+<table border="1">
+  <tr>
+    <th></th>
+    <% Sheet.distinct.pluck(:column).sort.each do |col| %>
+      <th><%= col %></th>
+    <% end %>
+    <th></th>
+  </tr>
+
+  <% Sheet.distinct.pluck(:row).sort.each do |row| %>
+    <tr>
+      <th><%= row.upcase %></th>
+      <% Sheet.where(row: row).order(:column).each do |seat| %>
+        <td><%= "#{seat.row.upcase}#{seat.column}" %></td>
+      <% end %>
+      <th><%= row.upcase %></th>
+    </tr>
+  <% end %>
+</table>
+
