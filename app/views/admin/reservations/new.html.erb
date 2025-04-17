@@ -1,0 +1,32 @@
+<h1>予約の追加</h1>
+
+<%= form_with model: @reservation, url: admin_reservations_path do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :schedule_id %>
+    <%= form.number_field :schedule_id %>
+  </div>
+
+  <div>
+    <%= form.label :sheet_id %>
+    <%= form.number_field :sheet_id %>
+  </div>
+
+  <div>
+    <%= form.label :date %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.submit "予約する" %>
+  </div>
+<% end %>

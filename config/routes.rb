@@ -1,25 +1,28 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # サイトステータス確認用（ヘルスチェック）
   get "up" => "rails/health#show", as: :rails_health_check
+  post '/users', to: 'users#create', as: :user_registration
+
+  devise_for :users
+  root to: 'movies#index'  # ← 適当なトップページに設定
+  # 映画一覧・詳細
   resources :movies, only: [:index, :show] do
-    # 座席表を表示
+    # 映画ごとの予約ページ表示（独自ルート）
     get 'reservation', on: :member
 
-    # 座席予約フォーム
+    # 映画 → スケジュール → 予約フォーム（new）
     resources :schedules, only: [] do
       resources :reservations, only: [:new]
     end
   end
 
-  # 予約の作成
+  # 予約作成（POST）
   resources :reservations, only: [:create]
-  namespace :admin do
-    resources :movies, only: [:index,:new,:create,:edit,:update,:destroy ]
-    resources :schedules, only: [:index, :edit, :update, :destroy]  
-  end
-  resources :movies, only: [:index, :show]
-end
 
+  # 管理画面用ルーティング
+  namespace :admin do
+    resources :movies, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :schedules, only: [:index, :edit, :update, :destroy]
+    resources :reservations 
+  end
+end

@@ -2,19 +2,17 @@ class CreateReservations < ActiveRecord::Migration[7.1]
   def change
     create_table :reservations do |t|
       t.date :date, null: false
-      t.integer :schedule_id, null: false
-      t.integer :sheet_id, null: false
+      t.references :schedule, null: false, foreign_key: true
+      t.references :sheet, null: false, foreign_key: true
       t.string :email, null: false, limit: 255, comment: '予約者メールアドレス'
       t.string :name, null: false, comment: '予約者名'
-      t.timestamps default: -> { 'CURRENT_TIMESTAMP' }, null: false
+      t.timestamps null: false
     end
 
-    add_index :reservations, :schedule_id, name: 'reservation_schedule_id_idx'
-    add_index :reservations, :sheet_id, name: 'reservation_sheet_id_idx'
-    add_index :reservations, [:date, :schedule_id, :sheet_id], unique: true, name: 'reservation_schedule_sheet_unique'
-
-    add_foreign_key :reservations, :schedules, column: :schedule_id
-    add_foreign_key :reservations, :sheets, column: :sheet_id
+    # add_foreign_key は不要（↑でforeign_key: trueにしてるから）
+    # add_foreign_key :reservations, :schedules ← 消す
+    # add_foreign_key :reservations, :sheets ← 消す
   end
 end
+
 

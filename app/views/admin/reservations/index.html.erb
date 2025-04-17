@@ -1,0 +1,25 @@
+<!-- app/views/admin/reservations/index.html.erb -->
+<h1>予約一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>映画</th>
+      <th>日時</th>
+      <th>座席</th>
+      <th>名前</th>
+      <th>メールアドレス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reservations.each do |reservation| %>
+      <tr>
+        <%= reservation.schedule.movie&.name || "不明な映画" %>
+        <td><%= reservation.date %> <%= reservation.schedule.start_time.strftime("%H:%M") %></td>
+        <td><%= "#{reservation.sheet.row.upcase}#{reservation.sheet.column}" %></td>
+        <td><%= reservation.name %></td>
+        <td><%= reservation.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

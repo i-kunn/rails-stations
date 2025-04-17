@@ -1,0 +1,32 @@
+<h1>座席表</h1>
+
+<p>選択された日付: <%= params[:date] %></p>
+<p>スケジュールID: <%= params[:schedule_id] %></p>
+
+<table>
+  <tr>
+    <th>座席番号</th>
+    <th>ステータス</th>
+  </tr>
+  
+  <% @seats.each do |seat| %>
+    <tr>
+      <td><%= "#{seat.row.upcase}#{seat.column}" %></td>
+      <td>
+        <% if @reserved_seats.include?(seat.id) %>
+          <!-- すでに予約されている座席の場合 -->
+          予約済み
+        <% else %>
+          <!-- 予約可能な座席の場合: new予約フォームへ飛ぶリンク -->
+          <%= link_to "座席を予約する", new_movie_schedule_reservation_path(
+              movie_id: @movie.id,
+              schedule_id: params[:schedule_id],
+              date: params[:date],
+              sheet_id: seat.id
+            )
+          %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -9,3 +9,17 @@
     <li><%= schedule.start_time.strftime("%Y/%m/%d %H:%M") %> ～ <%= schedule.end_time.strftime("%H:%M") %></li>
   <% end %>
 </ul>
+
+<hr>
+
+<!-- ▼ テスト用：座席を予約するフォーム（仮） -->
+<%= form_with url: reservations_path, method: :post do |form| %>
+  <%= form.hidden_field :movie_id, value: @movie.id %>
+  <%= form.hidden_field :schedule_id, value: @schedules.first&.id || 1 %>
+  <%= form.hidden_field :sheet_id, value: 1 %>
+  <%= form.hidden_field :date, value: "2025-04-09" %>
+  <%= form.text_field :name, value: "テスト太郎" %>
+  <%= form.email_field :email, value: "test@example.com" %>
+  <%= form.submit "座席を予約する" %>
+<% end %>
+
