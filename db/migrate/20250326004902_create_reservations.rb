@@ -14,5 +14,3 @@ class CreateReservations < ActiveRecord::Migration[7.1]
     # add_foreign_key :reservations, :sheets ← 消す
   end
 end
-
-

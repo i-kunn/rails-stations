@@ -6,11 +6,11 @@ class Reservation < ApplicationRecord
 
   validates :email, format: {
     with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/,
-    message: "は有効なメールアドレス形式で入力してください"
+    message: 'は有効なメールアドレス形式で入力してください'
   }
 
   validates :sheet_id, uniqueness: {
-    scope: [:schedule_id, :date],
-    message: "はすでに予約されています"
+    scope: %i[schedule_id date],
+    message: 'はすでに予約されています'
   }
 end
