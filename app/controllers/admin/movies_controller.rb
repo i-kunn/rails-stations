@@ -8,12 +8,12 @@ module Admin
       @movie = Movie.new
     end
 
-    def edit # ✅ 追加
+    def edit
       @movie = Movie.find(params[:id])
     end
 
     def create
-      @movie = Movie.new(movie_params) # ✅ 修正: params[:movie] を使わず、movie_params を利用
+      @movie = Movie.new(movie_params)
       if @movie.save
         redirect_to admin_movies_path, notice: '映画が登録されました'
       else
@@ -36,7 +36,7 @@ module Admin
       redirect_to admin_movies_path, notice: '映画が削除されました'
     end
 
-    private # ✅ Strong Parameters を追加
+    private
 
     def movie_params
       params.require(:movie).permit(:name, :year, :description, :image_url, :is_showing)

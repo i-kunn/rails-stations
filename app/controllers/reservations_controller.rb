@@ -23,8 +23,8 @@ class ReservationsController < ApplicationController
     if @reservation.save
       redirect_to movies_path, notice: '予約が完了しました'
     else
-      redirect_to "/movies/#{@reservation.schedule.movie_id}/reservation?schedule_id=#{@reservation.schedule_id}&date=#{@reservation.date}",
-                  alert: 'この座席はすでに予約されています'
+      redirect_to "/movies/#{@reservation.schedule.movie_id}/reservation?schedule_id=
+      #{@reservation.schedule_id}&date=#{@reservation.date}", alert: 'この座席はすでに予約されています'
     end
   end
 
