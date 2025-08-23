@@ -9,11 +9,17 @@ class MoviesController < ApplicationController
     end
     if params[:is_showing].present?
       is_showing_value = params[:is_showing].to_i
-      if is_showing_value == 1
+      # if is_showing_value == 1
+      #   @movies = @movies.where(is_showing: true)
+      # elsif is_showing_value == 0
+      #   @movies = @movies.where(is_showing: false)
+      # end
+      if is_showing_value.nonzero?
         @movies = @movies.where(is_showing: true)
-      elsif is_showing_value == 0
+      elsif is_showing_value.zero?
         @movies = @movies.where(is_showing: false)
       end
+
     end
     respond_to do |format|
       format.html { render :index }
