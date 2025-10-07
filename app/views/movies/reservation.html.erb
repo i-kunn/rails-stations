@@ -1,32 +1,49 @@
 <h1>座席表</h1>
 
-<p>選択された日付: <%= params[:date] %></p>
-<p>スケジュールID: <%= params[:schedule_id] %></p>
+<% if @time_problem.present? %>
+  <p class="alert" role="alert" style="color:#b91c1c;">
+    <% if @time_problem == :missing %>
+      選択されたスケジュールの上映時間は指定されていません。
+      このスケジュールの開始時刻は <strong><%= @scheduled_time %></strong> です。
+    <% elsif @time_problem == :mismatch %>
+      指定の上映時間（<%= params[:time] %>）は存在しません。
+      このスケジュールの開始時刻は <strong><%= @scheduled_time %></strong> です。
+    <% end %>
+  </p>
+<% end %>
 
-<table>
-  <tr>
-    <th>座席番号</th>
-    <th>ステータス</th>
-  </tr>
-  
-  <% @seats.each do |seat| %>
+<p>上映日付: <%= params[:date] %></p>
+<p>劇場：<strong><%= @theater&.name || '（劇場未設定）' %></strong></p>
+<p>上映時間: <%= @schedule.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= @schedule.end_time.strftime("%H:%M") %></p>
+<p><%= link_to "← 映画詳細に戻る", movie_path(@movie) %></p>
+
+<% if @seats.present? %>
+  <table>
     <tr>
-      <td><%= "#{seat.row.upcase}#{seat.column}" %></td>
-      <td>
-        <% if @reserved_seats.include?(seat.id) %>
-          <!-- すでに予約されている座席の場合 -->
-          予約済み
-        <% else %>
-          <!-- 予約可能な座席の場合: new予約フォームへ飛ぶリンク -->
-          <%= link_to "座席を予約する", new_movie_schedule_reservation_path(
-              movie_id: @movie.id,
-              schedule_id: params[:schedule_id],
-              date: params[:date],
-              sheet_id: seat.id
-            )
-          %>
-        <% end %>
-      </td>
+      <th>座席番号</th>
+      <th>ステータス</th>
     </tr>
-  <% end %>
-</table>
+
+    <% @seats.each do |seat| %>
+      <tr>
+        <td><%= "#{seat.row.upcase}#{seat.column}" %></td>
+        <td>
+          <% if Array(@reserved_seats).include?(seat.id) %>
+            予約済み
+          <% else %>
+            <%= link_to "座席を予約する",
+              new_movie_schedule_reservation_path(
+                @movie, @schedule,
+                date: params[:date],
+                time: @scheduled_time,
+                sheet_id: seat.id
+              ) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p class="notice">このスクリーンには座席が登録されていません（予約できません）。</p>
+<% end %>
+

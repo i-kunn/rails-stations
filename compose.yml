@@ -25,7 +25,8 @@ services:
       - "3000:3000"
     links:
       - db
-
+    env_file:         # ← これを追加
+      - .env
 volumes:
   rails-railway-stations-volume:
   bundle:

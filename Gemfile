@@ -4,6 +4,10 @@ ruby '3.3.3'
 
 gem 'devise'
 
+# Gemfile
+gem 'whenever', require: false
+
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
 
@@ -52,6 +56,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 6.1.3'
+  gem 'dotenv-rails'
 end
 
 group :development do

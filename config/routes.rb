@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :movies, only: %i[index show] do
     # 映画ごとの予約ページ表示（独自ルート）
     get 'reservation', on: :member
-
+    
     # 映画 → スケジュール → 予約フォーム（new）
     resources :schedules, only: [] do
       resources :reservations, only: [:new]

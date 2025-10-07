@@ -1,0 +1,16 @@
+<%# app/views/reminder_mailer/notify.text.erb %>
+<% r = @reservation
+   s_start = r.schedule.start_time.in_time_zone('Asia/Tokyo')
+   s_end   = r.schedule.end_time.in_time_zone('Asia/Tokyo')
+%>
+
+<%= r.name %> 様
+
+明日のご予約のお知らせです。
+
+【予約内容】
+映画館：<%= r.schedule.screen.theater.name %>
+作品  ：<%= r.schedule.movie.name || r.schedule.movie.title || '不明' %>
+上映時刻：<%= s_start.strftime('%Y-%m-%d %H:%M') %> ～ <%= s_end.strftime('%H:%M') %>
+座席  ：<%= "#{r.sheet.row}列#{r.sheet.column}番" %>
+

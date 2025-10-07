@@ -32,12 +32,28 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
+  # 開発中に Mailtrap に送る
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV.fetch('MAILTRAP_USERNAME'),
+    password:  ENV.fetch('MAILTRAP_PASSWORD'),
+    address:   'sandbox.smtp.mailtrap.io',
+    domain:    'sandbox.smtp.mailtrap.io',
+    port:      587,                 # ← 2525 から変更
+    authentication: :plain,         # ← cram_md5 から plain に変更
+    enable_starttls_auto: true      # ← STARTTLS を有効化
+    }
+  # URL生成が必要なら（メール内リンク等）
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.perform_caching = false
 

@@ -1,0 +1,10 @@
+予約が完了しました
+
+映画館: <%= @reservation.schedule.screen.theater.name %>
+作品:   <%= @reservation.schedule.movie.name %>
+上映時刻: <%= @reservation.schedule.start_time.strftime('%Y-%m-%d %H:%M') %>
+        〜 <%= @reservation.schedule.end_time.strftime('%H:%M') %>
+お名前: <%= @reservation.name %>
+
+ご予約ありがとうございました。
+

@@ -1,4 +1,4 @@
-<h1>Movie List</h1>
+<h1>映画上映リスト</h1>
 <form action="<%= movies_path %>" method="get">
   <label>
     <input type="radio" name="is_showing" value="" <%= params[:is_showing] == "" ? 'checked' : '' %>> すべて
@@ -31,6 +31,7 @@
   <% @movies.each do |movie| %>
     <tr>
       <td><%= movie.id %></td>
+      <td><%= link_to movie.name, movie_path(movie) %></td>
       <td><%= movie.name %></td>
       <td><%= movie.year %></td>
       <td><%= movie.description %></td>
@@ -45,3 +46,17 @@
     </tr>
   <% end %>
 </table>
+
+<h2>人気作品ランキング（過去30日）</h2>
+<% if @rankings.any? %>
+  <ol>
+    <% @rankings.each do |r| %>
+      <li>
+        <%= link_to r.movie.name, movie_path(r.movie) %>
+        （予約数: <%= r.total_reservations %>）
+      </li>
+    <% end %>
+  </ol>
+<% else %>
+  <p>まだランキングデータがありません。まずは集計タスクを実行してください。</p>
+<% end %>

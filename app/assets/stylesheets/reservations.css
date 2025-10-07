@@ -1,0 +1,54 @@
+/* ページ全体を中央寄せ */
+.reservation-container {
+  max-width: 600px;        /* フォームの最大幅 */
+  margin: 0 auto;          /* 左右中央寄せ */
+  padding: 20px;
+  text-align: left;        /* テキストは左揃え */
+}
+
+/* 見出しを中央寄せ */
+.reservation-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ボタンを左右に分ける */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* ボタン共通スタイル */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* 予約ボタン（右側） */
+.btn-reserve {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.btn-reserve:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* 戻るボタン（左側） */
+.btn-back {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-back:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}

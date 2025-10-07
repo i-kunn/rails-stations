@@ -1,22 +1,46 @@
-<h1>予約フォーム</h1>
+<% if @schedule.present? %>
+  <h1>座席予約フォーム</h1>
 
-<%= form_with model: @reservation, url: reservations_path, local: true do |form| %>
-  <%= form.hidden_field :movie_id, value: @movie_id %>
-  <%= form.hidden_field :schedule_id, value: @schedule_id %>
-  <%= form.hidden_field :sheet_id, value: @sheet_id %>
-  <%= form.hidden_field :date, value: @date %>
+  <p>映画: <%= @movie.name %></p>
+  <p>スケジュール: <%= @schedule.start_time.strftime("%Y/%m/%d %H:%M") %> ～ <%= @schedule.end_time.strftime("%H:%M") %></p>
 
-  <div>
-    <%= form.label :name, "名前" %><br>
-    <%= form.text_field :name %>
-  </div>
+  <% if @sheet.present? %>
+    <p>座席: <%= "#{@sheet.row.upcase}#{@sheet.column}" %></p>
+    <p>日付: <%= @date %></p>
 
-  <div>
-    <%= form.label :email, "メールアドレス" %><br>
-    <%= form.email_field :email %>
-  </div>
+    <%= form_with model: @reservation, url: reservations_path do |f| %>
+      <%= f.hidden_field :schedule_id %>
+      <%= f.hidden_field :sheet_id %>
+      <%= f.hidden_field :date %>
 
-  <div>
-    <%= form.submit "予約する" %>
-  </div>
+      <div>
+        <%= f.label :name, "お名前" %>
+        <%= f.text_field :name %>
+      </div>
+
+      <div>
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.email_field :email %>
+      </div>
+
+      <div class="button-group">
+        <%= link_to "座席表一覧に戻る",
+              reservation_movie_path(@movie, date: @date, schedule_id: @schedule.id),
+              class: "btn btn-back" %>
+        <%= f.submit "予約する", class: "btn btn-reserve" %>
+      </div>
+    <% end %>
+
+    <% if @reservation.errors.any? %>
+      <ul style="color: red;">
+        <% @reservation.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  <% else %>
+    <p class="notice">指定された日時の上映はありません。</p>
+    <p><%= link_to "映画詳細に戻る", movie_path(@movie) %></p>
+  <% end %>  
 <% end %>

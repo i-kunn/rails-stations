@@ -1,0 +1,17 @@
+<h1>予約が完了しました</h1>
+
+<p><strong>映画館:</strong>
+  <%= @reservation.schedule.screen.theater.name %>
+</p>
+<p><strong>作品:</strong>
+  <%= @reservation.schedule.movie.name %>
+</p>
+<p><strong>上映時刻:</strong>
+  <%= @reservation.schedule.start_time.strftime('%Y-%m-%d %H:%M') %>
+  〜 <%= @reservation.schedule.end_time.strftime('%H:%M') %>
+</p>
+<p><strong>お名前:</strong>
+  <%= @reservation.name %>
+</p>
+
+<p>ご予約ありがとうございました。</p>

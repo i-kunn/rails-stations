@@ -1,9 +1,6 @@
 inherit_from:
   - .rubocop_todo.yml
 
-# Metrics/MethodLength:
-#   Exclude:
-#     - 'db/migrate/**/*'
 Layout/LineLength:
   Max: 300
   Exclude:
