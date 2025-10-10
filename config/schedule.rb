@@ -27,37 +27,24 @@
 # end
 
 
-
-# env :TZ, 'Asia/Tokyo'
-# set :environment, 'development'
-
-# # 出力先は絶対パス、標準出力と標準エラーを分ける
-# set :output, {
-#   standard: "#{path}/log/cron.log",
-#   error:    "#{path}/log/cron.error.log"
-# }
-
-# # --silent を外す rake 実行定義
-# job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
-
-# every 1.minute do
-#   command "echo CRON_OK $(date) >> #{path}/log/cron_test.log"
-#   rake 'reminder:send'
-# end
+# config/schedule.rb
 # config/schedule.rb
 env :TZ, 'Asia/Tokyo'
-set :environment, 'development'   # 本番環境なら 'production'
+set :environment, 'development'
 
-set :output, {
-  standard: "#{path}/log/cron.log",
-  error:    "#{path}/log/cron.error.log"
-}
+# cron でも必ず見つかるように絶対パス＆固定 PATH
+env :PATH, '/usr/local/bundle/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+env :BUNDLE_GEMFILE, '/app/Gemfile'
+env :GEM_HOME, '/usr/local/bundle'
+env :BUNDLE_PATH, '/usr/local/bundle'
 
-job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
+set :output, { standard: '/app/log/cron.log', error: '/app/log/cron.error.log' }
 
-# ← 前日19:00に1回実行
-every 1.day, at: '7:00 pm' do
+# << ここが肝: bundle の絶対パスを使う（cron は PATH を信用しない）
+job_type :rake, "cd :path && :environment_variable=:environment /usr/local/bin/bundle exec rake :task :output"
+
+every 1.minute do
+  command "echo CRON_OK $(date) | tee -a /app/log/cron_test.log >> /app/log/cron.log 2>> /app/log/cron.error.log"
+
   rake 'reminder:send'
 end
-
-
