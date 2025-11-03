@@ -14,22 +14,54 @@ class EnforceIntegrityAndUniqueness < ActiveRecord::Migration[7.1]
     add_foreign_key :reservations, :sheets,    on_delete: :restrict unless foreign_key_exists?(:reservations, :sheets)
 
     # ---- 予約の一意制約（三つ組み）----
-    add_index :reservations, [:schedule_id, :sheet_id, :date],
-              unique: true, name: "idx_reservations_unique_triplet" unless
-              index_exists?(:reservations, [:schedule_id, :sheet_id, :date], unique: true, name: "idx_reservations_unique_triplet")
+    return if index_exists?(:reservations, %i[schedule_id sheet_id date], unique: true, name: 'idx_reservations_unique_triplet')
+
+    add_index :reservations, %i[schedule_id sheet_id date],
+              unique: true, name: 'idx_reservations_unique_triplet'
   end
 
   def down
-    remove_index :reservations, name: "idx_reservations_unique_triplet" rescue nil
+    begin
+      remove_index :reservations, name: 'idx_reservations_unique_triplet'
+    rescue StandardError
+      nil
+    end
 
-    remove_foreign_key :reservations, :sheets    rescue nil
-    remove_foreign_key :reservations, :schedules rescue nil
-    remove_foreign_key :schedules,   :screens   rescue nil
-    remove_foreign_key :schedules,   :movies    rescue nil
-    remove_foreign_key :screens,     :theaters  rescue nil
+    begin
+      remove_foreign_key :reservations, :sheets
+    rescue StandardError
+      nil
+    end
+    begin
+      remove_foreign_key :reservations, :schedules
+    rescue StandardError
+      nil
+    end
+    begin
+      remove_foreign_key :schedules, :screens
+    rescue StandardError
+      nil
+    end
+    begin
+      remove_foreign_key :schedules, :movies
+    rescue StandardError
+      nil
+    end
+    begin
+      remove_foreign_key :screens, :theaters
+    rescue StandardError
+      nil
+    end
 
-    change_column_null :schedules, :screen_id,  true  rescue nil
-    change_column_null :screens,   :theater_id, true  rescue nil
+    begin
+      change_column_null :schedules, :screen_id, true
+    rescue StandardError
+      nil
+    end
+    begin
+      change_column_null :screens, :theater_id, true
+    rescue StandardError
+      nil
+    end
   end
 end
-

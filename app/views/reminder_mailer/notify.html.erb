@@ -1,0 +1,12 @@
+<!-- app/views/reminder_mailer/notify.html.erb -->
+<p><%= @reservation.name %> 様</p>
+<p>明日のご予約のお知らせです。</p>
+<ul>
+  <li>映画館：<%= @reservation.schedule.screen.theater.name %></li>
+  <li>作品：<%= @reservation.schedule.movie.name %></li>
+  <li>上映時刻：
+    <%= @reservation.schedule.start_time.in_time_zone('Asia/Tokyo').strftime('%Y-%m-%d %H:%M') %>
+    〜 <%= @reservation.schedule.end_time.in_time_zone('Asia/Tokyo').strftime('%H:%M') %>
+  </li>
+  <li>座席：<%= "#{@reservation.sheet.row}列#{@reservation.sheet.column}番" %></li>
+</ul>

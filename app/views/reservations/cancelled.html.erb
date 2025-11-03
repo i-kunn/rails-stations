@@ -1,0 +1,20 @@
+<h1>予約をキャンセルしました</h1>
+
+<p>作品：<strong><%= @info[:movie_name] %></strong></p>
+<p>劇場：<%= @info[:theater] %>（<%= @info[:screen] %>）</p>
+<p>上映：<%= @info[:start_time].in_time_zone.strftime('%Y/%m/%d %H:%M') %>
+   〜 <%= @info[:end_time].in_time_zone.strftime('%H:%M') %></p>
+<p>座席：<%= @info[:seat_label] %></p>
+<p>予約日：<%= @info[:date] %></p>
+
+<hr>
+
+<p>
+  <%= link_to '同じ回の座席表へ戻る（再予約する）',
+      reservation_movie_path(
+        @info[:movie_id],
+        schedule_id: @info[:schedule_id],
+        date:        @info[:date]
+      ) %>
+</p>
+

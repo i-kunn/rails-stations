@@ -26,16 +26,16 @@
 #                 { id: 15, column: 5, row: 'c' }
 #               ])
 # 劇場
-theater = Theater.find_or_create_by!(name: "名古屋シネマ")
-theater2 = Theater.find_or_create_by!(name: "東京シネマ")
-theater3 = Theater.find_or_create_by!(name: "大阪シネマ")
+theater = Theater.find_or_create_by!(name: '名古屋シネマ')
+theater2 = Theater.find_or_create_by!(name: '東京シネマ')
+theater3 = Theater.find_or_create_by!(name: '大阪シネマ')
 
 # スクリーン
-screen1 = Screen.find_or_create_by!(theater: theater, name: "スクリーン1")
-screen2 = Screen.find_or_create_by!(theater: theater2, name: "スクリーン2")
-screen3 = Screen.find_or_create_by!(theater: theater3, name: "スクリーン3")
+screen1 = Screen.find_or_create_by!(theater: theater, name: 'スクリーン1')
+screen2 = Screen.find_or_create_by!(theater: theater2, name: 'スクリーン2')
+screen3 = Screen.find_or_create_by!(theater: theater3, name: 'スクリーン3')
 # 座席（3x5）
-("A".."C").each do |row|
+('A'..'C').each do |row|
   (1..5).each do |col|
     Sheet.find_or_create_by!(screen: screen1, row:, column: col)
     Sheet.find_or_create_by!(screen: screen2, row:, column: col)
@@ -48,55 +48,55 @@ end
 # ========================
 
 # ドラえもん（スケジュールあり）
-dora = Movie.find_or_create_by!(name: "ドラえもん") do |m|
+dora = Movie.find_or_create_by!(name: 'ドラえもん') do |m|
   m.is_showing  = true
-  m.year        = "2025"
-  m.description = "seedテスト用"
+  m.year        = '2025'
+  m.description = 'seedテスト用'
 end
 
 s1 = Schedule.find_or_create_by!(
   movie: dora, screen: screen1,
-  start_time: Time.zone.parse("2025-08-15 18:00"),
-  end_time:   Time.zone.parse("2025-08-15 20:00")
+  start_time: Time.zone.parse('2025-08-15 18:00'),
+  end_time: Time.zone.parse('2025-08-15 20:00')
 )
 
 Schedule.find_or_create_by!(
   movie: dora, screen: screen2,
-  start_time: Time.zone.parse("2025-08-15 19:00"),
-  end_time:   Time.zone.parse("2025-08-15 21:00")
+  start_time: Time.zone.parse('2025-08-15 19:00'),
+  end_time: Time.zone.parse('2025-08-15 21:00')
 )
 
 # 名探偵コナン
-conan = Movie.find_or_create_by!(name: "名探偵コナン") do |m|
+conan = Movie.find_or_create_by!(name: '名探偵コナン') do |m|
   m.is_showing  = true
-  m.year        = "2025"
-  m.description = "seedテスト用"
+  m.year        = '2025'
+  m.description = 'seedテスト用'
 end
 
 s_conan = Schedule.find_or_create_by!(
   movie: conan, screen: screen1,
-  start_time: Time.zone.parse("2025-09-20 18:00"),
-  end_time:   Time.zone.parse("2025-09-20 20:00")
+  start_time: Time.zone.parse('2025-09-20 18:00'),
+  end_time: Time.zone.parse('2025-09-20 20:00')
 )
 
 # ワンピース
-onep = Movie.find_or_create_by!(name: "ワンピース") do |m|
+onep = Movie.find_or_create_by!(name: 'ワンピース') do |m|
   m.is_showing  = true
-  m.year        = "2025"
-  m.description = "seedテスト用"
+  m.year        = '2025'
+  m.description = 'seedテスト用'
 end
 
 s_onep = Schedule.find_or_create_by!(
   movie: onep, screen: screen2,
-  start_time: Time.zone.parse("2025-09-21 19:00"),
-  end_time:   Time.zone.parse("2025-09-21 21:00")
+  start_time: Time.zone.parse('2025-09-21 19:00'),
+  end_time: Time.zone.parse('2025-09-21 21:00')
 )
 
 # 上映未定作品（スケジュールなし → 空メッセージ確認用）
-no_sched = Movie.find_or_create_by!(name: "上映未定作品") do |m|
+Movie.find_or_create_by!(name: '上映未定作品') do |m|
   m.is_showing  = false
-  m.year        = "2026"
-  m.description = "スケジュールがまだありません（空状態テスト用）"
+  m.year        = '2026'
+  m.description = 'スケジュールがまだありません（空状態テスト用）'
 end
 
 # ========================
@@ -104,18 +104,18 @@ end
 # ========================
 
 # スクリーンごとの座席
-seat1_s1 = Sheet.find_by!(screen: screen1, row: "A", column: 1)
-seat2_s1 = Sheet.find_by!(screen: screen1, row: "A", column: 2)
-seat1_s2 = Sheet.find_by!(screen: screen2, row: "A", column: 1)
-seat2_s2 = Sheet.find_by!(screen: screen2, row: "A", column: 2)
+seat1_s1 = Sheet.find_by!(screen: screen1, row: 'A', column: 1)
+seat2_s1 = Sheet.find_by!(screen: screen1, row: 'A', column: 2)
+seat1_s2 = Sheet.find_by!(screen: screen2, row: 'A', column: 1)
+Sheet.find_by!(screen: screen2, row: 'A', column: 2)
 
 # ドラえもん: B3を8/15で予約済みに
-seat_b3 = Sheet.find_by!(screen: screen1, row: "B", column: 3)
+seat_b3 = Sheet.find_by!(screen: screen1, row: 'B', column: 3)
 Reservation.find_or_create_by!(
-  schedule: s1, sheet: seat_b3, date: Date.parse("2025-08-15")
+  schedule: s1, sheet: seat_b3, date: Date.parse('2025-08-15')
 ) do |r|
-  r.name  = "テストユーザー"
-  r.email = "test@example.com"
+  r.name  = 'テストユーザー'
+  r.email = 'test@example.com'
 end
 
 # ドラえもん: 10件
@@ -153,30 +153,30 @@ end
 # ========================
 
 # 座席を一切作らないスクリーン（座席ゼロ検証用）
-screen3 = Screen.find_or_create_by!(theater: theater, name: "スクリーン3（座席なし）")
+screen3 = Screen.find_or_create_by!(theater: theater, name: 'スクリーン3（座席なし）')
 
 # ワンピースを screen3 で上映（でも座席が無いので座席表は空状態になる）
-s_onep_no_seat = Schedule.find_or_create_by!(
+Schedule.find_or_create_by!(
   movie: onep, screen: screen3,
-  start_time: Time.zone.parse("2025-09-22 04:00"),
-  end_time:   Time.zone.parse("2025-09-22 06:00")
+  start_time: Time.zone.parse('2025-09-22 04:00'),
+  end_time: Time.zone.parse('2025-09-22 06:00')
 )
-s_onep_timecheck = Schedule.find_or_create_by!(
+Schedule.find_or_create_by!(
   movie: onep, screen: screen3,
-  start_time: Time.zone.parse("2025-09-22 09:00"),
-  end_time:   Time.zone.parse("2025-09-22 11:00")
+  start_time: Time.zone.parse('2025-09-22 09:00'),
+  end_time: Time.zone.parse('2025-09-22 11:00')
 )
 # db/seeds.rb
 # TZ を合わせたい場合は config/application.rb 側で config.time_zone を設定しておく
 # ここでは Time.zone.parse を使います
 
-puts "== Create Theaters =="
-nagoya = Theater.find_or_create_by!(name: "名古屋シネマ")
-osaka  = Theater.find_or_create_by!(name: "大阪シネマ")
-tokyo  = Theater.find_or_create_by!(name: "東京シネマ")
+puts '== Create Theaters =='
+nagoya = Theater.find_or_create_by!(name: '名古屋シネマ')
+osaka  = Theater.find_or_create_by!(name: '大阪シネマ')
+tokyo  = Theater.find_or_create_by!(name: '東京シネマ')
 
 # 3x5 の座席を作るユーティリティ
-def ensure_seats(screen, rows: ("A".."C"), cols: (1..5))
+def ensure_seats(screen, rows: ('A'..'C'), cols: (1..5))
   rows.each do |row|
     cols.each do |col|
       Sheet.find_or_create_by!(screen:, row:, column: col)
@@ -186,9 +186,9 @@ end
 
 # 劇場ごとにスクリーンを作る（スクリーン3は“座席なし”検証用）
 def build_screens_for(theater)
-  s1 = Screen.find_or_create_by!(theater:, name: "スクリーン1")
-  s2 = Screen.find_or_create_by!(theater:, name: "スクリーン2")
-  s3 = Screen.find_or_create_by!(theater:, name: "スクリーン3（座席なし）")
+  s1 = Screen.find_or_create_by!(theater:, name: 'スクリーン1')
+  s2 = Screen.find_or_create_by!(theater:, name: 'スクリーン2')
+  s3 = Screen.find_or_create_by!(theater:, name: 'スクリーン3（座席なし）')
 
   ensure_seats(s1)
   ensure_seats(s2)
@@ -197,19 +197,35 @@ def build_screens_for(theater)
   { s1:, s2:, s3: }
 end
 
-puts "== Create Screens & Seats =="
+puts '== Create Screens & Seats =='
 screens_by_theater = {
   nagoya => build_screens_for(nagoya),
-  osaka  => build_screens_for(osaka),
-  tokyo  => build_screens_for(tokyo),
+  osaka => build_screens_for(osaka),
+  tokyo => build_screens_for(tokyo)
 }
 
-puts "== Create Movies =="
-dora  = Movie.find_or_create_by!(name: "ドラえもん")   { _1.is_showing = true; _1.year = "2025"; _1.description = "seedテスト用" }
-conan = Movie.find_or_create_by!(name: "名探偵コナン") { _1.is_showing = true; _1.year = "2025"; _1.description = "seedテスト用" }
-onep  = Movie.find_or_create_by!(name: "ワンピース")   { _1.is_showing = true; _1.year = "2025"; _1.description = "seedテスト用" }
+puts '== Create Movies =='
+dora  = Movie.find_or_create_by!(name: 'ドラえもん') do
+  _1.is_showing = true
+  _1.year = '2025'
+  _1.description = 'seedテスト用'
+end
+conan = Movie.find_or_create_by!(name: '名探偵コナン') do
+  _1.is_showing = true
+  _1.year = '2025'
+  _1.description = 'seedテスト用'
+end
+onep = Movie.find_or_create_by!(name: 'ワンピース') do
+  _1.is_showing = true
+  _1.year = '2025'
+  _1.description = 'seedテスト用'
+end
 
-no_sched = Movie.find_or_create_by!(name: "上映未定作品") { _1.is_showing = false; _1.year = "2026"; _1.description = "スケジュールがまだありません（空テスト）" }
+Movie.find_or_create_by!(name: '上映未定作品') do
+  _1.is_showing = false
+  _1.year = '2026'
+  _1.description = 'スケジュールがまだありません（空テスト）'
+end
 
 # ===== 劇場ごとの“3パターン” =====
 # P1(名古屋): ドラ18-20 / コナン19-21 / ワンピ20-22
@@ -218,101 +234,102 @@ no_sched = Movie.find_or_create_by!(name: "上映未定作品") { _1.is_showing 
 #
 # ※ 日付は被っていてもOK。座席はスクリーンに紐づくので同名映画でも theater 単位で独立。
 
-puts "== Create Schedules =="
+puts '== Create Schedules =='
 # 名古屋（P1）
 ng = screens_by_theater[nagoya]
 s1_dora  = Schedule.find_or_create_by!(movie: dora,  screen: ng[:s1],
-                start_time: Time.zone.parse("2025-09-20 13:00"), end_time: Time.zone.parse("2025-09-20 14:00"))
+                                       start_time: Time.zone.parse('2025-09-20 13:00'), end_time: Time.zone.parse('2025-09-20 14:00'))
 s1_conan = Schedule.find_or_create_by!(movie: conan, screen: ng[:s1],
-                start_time: Time.zone.parse("2025-09-20 14:00"), end_time: Time.zone.parse("2025-09-20 15:00"))
+                                       start_time: Time.zone.parse('2025-09-20 14:00'), end_time: Time.zone.parse('2025-09-20 15:00'))
 s2_onep  = Schedule.find_or_create_by!(movie: onep,  screen: ng[:s2],
-                start_time: Time.zone.parse("2025-09-20 20:00"), end_time: Time.zone.parse("2025-09-20 22:00"))
+                                       start_time: Time.zone.parse('2025-09-20 20:00'), end_time: Time.zone.parse('2025-09-20 22:00'))
 # 座席なしスクリーンでも一応1本入れて空表示確認用
-ng_no_seat = Schedule.find_or_create_by!(movie: onep, screen: ng[:s3],
-                start_time: Time.zone.parse("2025-09-22 04:00"), end_time: Time.zone.parse("2025-09-22 06:00"))
+Schedule.find_or_create_by!(movie: onep, screen: ng[:s3],
+                            start_time: Time.zone.parse('2025-09-22 04:00'), end_time: Time.zone.parse('2025-09-22 06:00'))
 
 # 大阪（P2）
 os = screens_by_theater[osaka]
-os_dora  = Schedule.find_or_create_by!(movie: dora,  screen: os[:s1],
-                start_time: Time.zone.parse("2025-09-21 17:00"), end_time: Time.zone.parse("2025-09-21 19:00"))
-os_conan = Schedule.find_or_create_by!(movie: conan, screen: os[:s2],
-                start_time: Time.zone.parse("2025-09-21 20:00"), end_time: Time.zone.parse("2025-09-21 22:00"))
-os_onep  = Schedule.find_or_create_by!(movie: onep,  screen: os[:s3], # ← 座席なしで空表示
-                start_time: Time.zone.parse("2025-09-21 08:00"), end_time: Time.zone.parse("2025-09-21 10:00"))
+Schedule.find_or_create_by!(movie: dora,  screen: os[:s1],
+                            start_time: Time.zone.parse('2025-09-21 17:00'), end_time: Time.zone.parse('2025-09-21 19:00'))
+Schedule.find_or_create_by!(movie: conan, screen: os[:s2],
+                            start_time: Time.zone.parse('2025-09-21 20:00'), end_time: Time.zone.parse('2025-09-21 22:00'))
+Schedule.find_or_create_by!(movie: onep,  screen: os[:s3], # ← 座席なしで空表示
+                            start_time: Time.zone.parse('2025-09-21 08:00'), end_time: Time.zone.parse('2025-09-21 10:00'))
 
 # 東京（P3）
 tk = screens_by_theater[tokyo]
-tk_dora  = Schedule.find_or_create_by!(movie: dora,  screen: tk[:s1],
-                start_time: Time.zone.parse("2025-09-22 09:00"), end_time: Time.zone.parse("2025-09-22 11:00"))
-tk_conan = Schedule.find_or_create_by!(movie: conan, screen: tk[:s1],
-                start_time: Time.zone.parse("2025-09-22 12:00"), end_time: Time.zone.parse("2025-09-22 14:00"))
-tk_onep  = Schedule.find_or_create_by!(movie: onep,  screen: tk[:s2],
-                start_time: Time.zone.parse("2025-09-22 15:00"), end_time: Time.zone.parse("2025-09-22 17:00"))
+Schedule.find_or_create_by!(movie: dora,  screen: tk[:s1],
+                            start_time: Time.zone.parse('2025-09-22 09:00'), end_time: Time.zone.parse('2025-09-22 11:00'))
+Schedule.find_or_create_by!(movie: conan, screen: tk[:s1],
+                            start_time: Time.zone.parse('2025-09-22 12:00'), end_time: Time.zone.parse('2025-09-22 14:00'))
+Schedule.find_or_create_by!(movie: onep,  screen: tk[:s2],
+                            start_time: Time.zone.parse('2025-09-22 15:00'), end_time: Time.zone.parse('2025-09-22 17:00'))
 
-puts "== Sample Reservations =="
+puts '== Sample Reservations =='
 # 名古屋のドラえもん: B3 を 9/20 で予約済みに
-b3_ng = Sheet.find_by!(screen: ng[:s1], row: "B", column: 3)
-Reservation.find_or_create_by!(schedule: s1_dora, sheet: b3_ng, date: Date.parse("2025-09-20")) do |r|
-  r.name = "テストユーザー"; r.email = "test@example.com"
+b3_ng = Sheet.find_by!(screen: ng[:s1], row: 'B', column: 3)
+Reservation.find_or_create_by!(schedule: s1_dora, sheet: b3_ng, date: Date.parse('2025-09-20')) do |r|
+  r.name = 'テストユーザー'
+  r.email = 'test@example.com'
 end
 
 # 過去N日分ダミー（名古屋・ドラ）
-seat_a1_ng = Sheet.find_by!(screen: ng[:s1], row: "A", column: 1)
+seat_a1_ng = Sheet.find_by!(screen: ng[:s1], row: 'A', column: 1)
 10.times do |i|
   Reservation.find_or_create_by!(schedule: s1_dora, sheet: seat_a1_ng, date: Date.current - i) do |r|
-    r.name = "ドラえもんユーザー#{i}"; r.email = "dora#{i}@example.com"
+    r.name = "ドラえもんユーザー#{i}"
+    r.email = "dora#{i}@example.com"
   end
 end
 
 # コナン（名古屋）
-seat_a2_ng = Sheet.find_by!(screen: ng[:s1], row: "A", column: 2)
+seat_a2_ng = Sheet.find_by!(screen: ng[:s1], row: 'A', column: 2)
 5.times do |i|
   Reservation.find_or_create_by!(schedule: s1_conan, sheet: seat_a2_ng, date: Date.current - i) do |r|
-    r.name = "コナンユーザー#{i}"; r.email = "conan#{i}@example.com"
+    r.name = "コナンユーザー#{i}"
+    r.email = "conan#{i}@example.com"
   end
 end
 
 # ワンピース（名古屋・スクリーン2）
-seat_a1_ng2 = Sheet.find_by!(screen: ng[:s2], row: "A", column: 1)
+seat_a1_ng2 = Sheet.find_by!(screen: ng[:s2], row: 'A', column: 1)
 20.times do |i|
   Reservation.find_or_create_by!(schedule: s2_onep, sheet: seat_a1_ng2, date: Date.current - i) do |r|
-    r.name = "ワンピースユーザー#{i}"; r.email = "onep#{i}@example.com"
+    r.name = "ワンピースユーザー#{i}"
+    r.email = "onep#{i}@example.com"
   end
 end
-# === Remind用テストデータ（明日分） ===
-Time.zone = 'Asia/Tokyo'
-tomorrow_date  = Time.zone.tomorrow.to_date
-tomorrow_start = Time.zone.parse("#{tomorrow_date} 19:00")
-tomorrow_end   = tomorrow_start + 2.hours
+# ========================
+# 🎯 キャンセル機能テスト用データ（上映が未来）
+# ========================
+puts '== Create Future Schedule for Cancel Test =='
 
-# 使う劇場/スクリーン/座席を1つ確定（名古屋シネマのスクリーン1を想定）
-nagoya = Theater.find_or_create_by!(name: "名古屋シネマ")
-scr1   = Screen.find_or_create_by!(theater: nagoya, name: "スクリーン1")
-# 座席が無い場合もあるのでA1だけ必ず用意
-seat_a1 = Sheet.find_or_create_by!(screen: scr1, row: "A", column: 1)
-
-# 明日19:00〜のスケジュール（作品は「ドラえもん」を利用）
-dora = Movie.find_or_create_by!(name: "ドラえもん") do |m|
+# 名古屋シネマのスクリーン1を使用
+cancel_test_movie = Movie.find_or_create_by!(name: 'キャンセルテスト用映画') do |m|
   m.is_showing  = true
-  m.year        = "2025"
-  m.description = "seedテスト用"
+  m.year        = '2025'
+  m.description = 'キャンセルボタン表示確認用'
 end
 
-sched_tomorrow = Schedule.find_or_create_by!(
-  movie: dora, screen: scr1,
-  start_time: tomorrow_start, end_time: tomorrow_end
+future_schedule = Schedule.find_or_create_by!(
+  movie: cancel_test_movie,
+  screen: ng[:s1],
+  start_time: Time.zone.now + 5.hours, # 現在から5時間後
+  end_time: Time.zone.now + 7.hours # 上映時間2時間
 )
 
-# 明日分の予約（reminder:send が拾うのは 'date' カラム）
+# 任意の座席を1つ取得（A1）
+test_sheet = Sheet.find_by!(screen: ng[:s1], row: 'A', column: 1)
+
+# 今日の日付で予約を作成
 Reservation.find_or_create_by!(
-  schedule: sched_tomorrow,
-  sheet:    seat_a1,
-  date:     tomorrow_date
+  schedule: future_schedule,
+  sheet: test_sheet,
+  date: Date.current
 ) do |r|
-  r.name  = "リマインドテスト"
-  r.email = "test@example.com"  # ★宛先必須
+  r.name  = 'キャンセルテストユーザー'
+  r.email = 'cancel@example.com'
 end
 
-puts "== Remind seed ready: #{tomorrow_date} 19:00 at 名古屋シネマ/スクリーン1 =="
-
-puts "== DONE =="
+puts '🎬 未来上映テスト用のスケジュールを作成しました！'
+puts "上映開始時刻: #{future_schedule.start_time}"

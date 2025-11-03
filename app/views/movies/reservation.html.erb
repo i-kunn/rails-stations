@@ -17,6 +17,7 @@
 <p>上映時間: <%= @schedule.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= @schedule.end_time.strftime("%H:%M") %></p>
 <p><%= link_to "← 映画詳細に戻る", movie_path(@movie) %></p>
 
+
 <% if @seats.present? %>
   <table>
     <tr>
@@ -28,16 +29,23 @@
       <tr>
         <td><%= "#{seat.row.upcase}#{seat.column}" %></td>
         <td>
-          <% if Array(@reserved_seats).include?(seat.id) %>
-            予約済み
+          <% reservation = (@reservation_by_seat_id || {})[seat.id] %>
+
+          <% if reservation.present? %>
+            <% if my_reservation?(reservation) && cancellable?(reservation) %>
+            <%= link_to 'キャンセル確認へ', confirm_cancel_reservation_path(reservation) %>
+            <% elsif my_reservation?(reservation) %>
+              <span style="color:gray;">キャンセル期限を過ぎています</span>
+            <% else %>
+              予約済み
+            <% end %>
           <% else %>
             <%= link_to "座席を予約する",
-              new_movie_schedule_reservation_path(
-                @movie, @schedule,
-                date: params[:date],
-                time: @scheduled_time,
-                sheet_id: seat.id
-              ) %>
+                new_movie_schedule_reservation_path(
+                  @movie, @schedule,
+                  date: params[:date],
+                  sheet_id: seat.id
+                ) %>
           <% end %>
         </td>
       </tr>
@@ -46,4 +54,3 @@
 <% else %>
   <p class="notice">このスクリーンには座席が登録されていません（予約できません）。</p>
 <% end %>
-

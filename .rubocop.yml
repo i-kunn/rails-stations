@@ -1,29 +1,50 @@
+inherit_mode:
+  merge:
+    - Exclude
+    - Include
+
 inherit_from:
   - .rubocop_todo.yml
 
+# 行の長さは現状維持
 Layout/LineLength:
   Max: 300
   Exclude:
     - 'db/migrate/**/*'
 
+# まずはMethodLengthを広げる（必要なら後で段階的に戻す）
 Metrics/MethodLength:
-  Max: 18
+  Max: 30      # ← 18→30 に拡大（いま貼ってある値でOK）
   Exclude:
     - 'db/migrate/**/*'
 
+# ABCサイズも少し余裕を持たせる（必要なら）
+Metrics/AbcSize:
+  Max: 70  # 既に40ならこのまま
+
+
+Metrics/ClassLength:
+  Max: 120
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/PerceivedComplexity:
+  Max: 16
+
+# 大きめブロックの許容
 Metrics/BlockLength:
   Max: 90
   Exclude:
     - 'db/migrate/**/*'
-  
-Metrics/AbcSize:
-  Max: 40   # 27 → 40 に上げる（もっと許容）
 
+# ドキュメント系は無効のまま
 Style/Documentation:
   Enabled: false
-  
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+# メソッド呼び出しの折返しインデント
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented

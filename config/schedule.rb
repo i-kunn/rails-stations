@@ -26,25 +26,25 @@
 #   rake 'reminder:send'
 # end
 
-
-# config/schedule.rb
 # config/schedule.rb
 env :TZ, 'Asia/Tokyo'
 set :environment, 'development'
 
-# cron でも必ず見つかるように絶対パス＆固定 PATH
-env :PATH, '/usr/local/bundle/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-env :BUNDLE_GEMFILE, '/app/Gemfile'
-env :GEM_HOME, '/usr/local/bundle'
-env :BUNDLE_PATH, '/usr/local/bundle'
-
 set :output, { standard: '/app/log/cron.log', error: '/app/log/cron.error.log' }
 
-# << ここが肝: bundle の絶対パスを使う（cron は PATH を信用しない）
-job_type :rake, "cd :path && :environment_variable=:environment /usr/local/bin/bundle exec rake :task :output"
-
-every 1.minute do
-  command "echo CRON_OK $(date) | tee -a /app/log/cron_test.log >> /app/log/cron.log 2>> /app/log/cron.error.log"
-
+job_type :rake, '
+  cd :path &&
+  export BUNDLE_GEMFILE=/app/Gemfile &&
+  export GEM_HOME=/usr/local/bundle &&
+  export BUNDLE_PATH=/usr/local/bundle &&
+  export PATH=/usr/local/bundle/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&
+  :environment_variable=:environment /usr/local/bin/bundle exec rake :task :output
+'
+# # 19時に毎日実行
+ every 1.day, at: '19:00' do
   rake 'reminder:send'
 end
+  # 本番用
+every 1.day, at: '00:00' do
+  rake 'ranking:update'
+end 

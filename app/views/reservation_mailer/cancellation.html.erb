@@ -1,0 +1,11 @@
+<p>予約のキャンセルが完了しました。</p>
+
+
+<p>お名前: <%= @reservation.name %></p>
+<p>作品：<strong><%= @info[:movie_name] %></strong></p>
+<p>劇場：<%= @info[:theater] %>（<%= @info[:screen] %>）</p>
+<p>上映：<%= @info[:start_time].in_time_zone.strftime('%Y/%m/%d %H:%M') %> 〜 <%= @info[:end_time].in_time_zone.strftime('%H:%M') %></p>
+<p>座席：<%= @info[:seat_label] %></p>
+<p>予約日：<%= @info[:date] %></p>
+
+<p>またのご利用をお待ちしております。</p>

@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :theater do
-    name { "MyString" }
+    name { 'MyString' }
   end
 end

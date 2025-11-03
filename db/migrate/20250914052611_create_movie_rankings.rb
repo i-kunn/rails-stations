@@ -6,6 +6,6 @@ class CreateMovieRankings < ActiveRecord::Migration[7.1]
       t.date :date, null: false
       t.timestamps
     end
-    add_index :movie_rankings, [:date, :movie_id], unique: true
+    add_index :movie_rankings, %i[date movie_id], unique: true
   end
 end

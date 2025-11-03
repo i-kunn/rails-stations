@@ -10,7 +10,6 @@
 
 【予約内容】
 映画館：<%= r.schedule.screen.theater.name %>
-作品  ：<%= r.schedule.movie.name || r.schedule.movie.title || '不明' %>
+作品  ：<%= r.schedule.movie.name %>
 上映時刻：<%= s_start.strftime('%Y-%m-%d %H:%M') %> ～ <%= s_end.strftime('%H:%M') %>
 座席  ：<%= "#{r.sheet.row}列#{r.sheet.column}番" %>
-

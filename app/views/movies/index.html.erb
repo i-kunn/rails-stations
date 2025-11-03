@@ -46,14 +46,18 @@
     </tr>
   <% end %>
 </table>
-
 <h2>人気作品ランキング（過去30日）</h2>
+
 <% if @rankings.any? %>
+  <% if @target_date.present? %>
+    <p>対象日：<%= @target_date.strftime('%Y-%m-%d') %></p>
+  <% end %>
+
   <ol>
     <% @rankings.each do |r| %>
       <li>
         <%= link_to r.movie.name, movie_path(r.movie) %>
-        （予約数: <%= r.total_reservations %>）
+        （予約数：<%= number_with_delimiter(r.total_reservations) %>）
       </li>
     <% end %>
   </ol>

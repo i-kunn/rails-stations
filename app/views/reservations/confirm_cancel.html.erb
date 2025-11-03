@@ -1,0 +1,25 @@
+<h1>予約キャンセル確認画面</h1>
+
+<p>作品：<%= @reservation.schedule.movie.name %></p>
+<p>上映：<%= @reservation.schedule.start_time.in_time_zone.strftime('%Y/%m/%d %H:%M') %>
+   〜 <%= @reservation.schedule.end_time.in_time_zone.strftime('%H:%M') %></p>
+<p>座席：<%= "#{@reservation.sheet.row}#{@reservation.sheet.column}" %></p>
+<p>予約日：<%= @reservation.date %></p>
+
+<% if @cancellable %>
+  <%= button_to 'この予約をキャンセルする',
+                reservation_path(@reservation),
+                method: :delete,
+                data: { confirm: '本当にキャンセルしますか？' } %>
+<% else %>
+  <p style="color:gray;">キャンセル期限（<%= @limit_hours %>時間前）を過ぎています。</p>
+<% end %>
+
+<p>
+  <%= link_to '座席表に戻る',
+      reservation_movie_path(
+        @reservation.schedule.movie,
+        schedule_id: @reservation.schedule_id,
+        date:        @reservation.date
+      ) %>
+</p>

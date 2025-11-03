@@ -5,7 +5,6 @@ class Reservation < ApplicationRecord
   validates :schedule_id, :sheet_id, :name, :email, :date, presence: { message: 'を入力してください' }
   validate :sheet_belongs_to_schedule_screen
 
-
   validates :email, format: {
     with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/,
     message: 'は有効なメールアドレス形式で入力してください'
@@ -19,8 +18,8 @@ class Reservation < ApplicationRecord
   def sheet_belongs_to_schedule_screen
     return if sheet.blank? || schedule.blank?
 
-    if sheet.screen_id != schedule.screen_id
-      errors.add(:sheet_id, "の座席はこのスケジュールのスクリーンに属していません")
-    end
+    return unless sheet.screen_id != schedule.screen_id
+
+    errors.add(:sheet_id, 'の座席はこのスケジュールのスクリーンに属していません')
   end
 end

@@ -9,15 +9,22 @@ Rails.application.routes.draw do
   resources :movies, only: %i[index show] do
     # 映画ごとの予約ページ表示（独自ルート）
     get 'reservation', on: :member
-    
+
     # 映画 → スケジュール → 予約フォーム（new）
     resources :schedules, only: [] do
       resources :reservations, only: [:new]
     end
   end
 
-  # 予約作成（POST）
-  resources :reservations, only: [:create]
+  # 予約作成・キャンセル + 確認/完了ページ
+  resources :reservations, only: %i[create destroy] do
+    member do
+      get :confirm_cancel # /reservations/:id/confirm_cancel
+    end
+    collection do
+      get :cancelled # /reservations/cancelled
+    end
+  end
 
   # 管理画面用ルーティング
   namespace :admin do

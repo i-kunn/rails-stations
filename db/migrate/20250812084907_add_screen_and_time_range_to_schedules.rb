@@ -113,8 +113,8 @@ class AddScreenAndTimeRangeToSchedules < ActiveRecord::Migration[7.1]
       unless column_exists?(:schedules, :screen_id)
 
     # 時間の索引用インデックス
-    add_index :schedules, [:screen_id, :start_time, :end_time], name: "idx_schedules_screen_time" \
-      unless index_exists?(:schedules, [:screen_id, :start_time, :end_time], name: "idx_schedules_screen_time")
+    add_index :schedules, %i[screen_id start_time end_time], name: 'idx_schedules_screen_time' \
+      unless index_exists?(:schedules, %i[screen_id start_time end_time], name: 'idx_schedules_screen_time')
 
     # start_time < end_time の保護（MySQL 8.0+）
     begin
@@ -179,7 +179,7 @@ class AddScreenAndTimeRangeToSchedules < ActiveRecord::Migration[7.1]
   def down
     execute 'DROP TRIGGER IF EXISTS schedules_no_overlap_insert;'
     execute 'DROP TRIGGER IF EXISTS schedules_no_overlap_update;'
-    remove_index :schedules, name: "idx_schedules_screen_time" if index_exists?(:schedules, name: "idx_schedules_screen_time")
+    remove_index :schedules, name: 'idx_schedules_screen_time' if index_exists?(:schedules, name: 'idx_schedules_screen_time')
     begin
       execute 'ALTER TABLE schedules DROP CONSTRAINT chk_schedule_time'
     rescue StandardError

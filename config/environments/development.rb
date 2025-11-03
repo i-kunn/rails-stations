@@ -36,16 +36,15 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     user_name: ENV.fetch('MAILTRAP_USERNAME'),
-    password:  ENV.fetch('MAILTRAP_PASSWORD'),
-    address:   'sandbox.smtp.mailtrap.io',
-    domain:    'sandbox.smtp.mailtrap.io',
-    port:      587,                 # ← 2525 から変更
+    password: ENV.fetch('MAILTRAP_PASSWORD'),
+    address: 'sandbox.smtp.mailtrap.io',
+    domain: 'sandbox.smtp.mailtrap.io',
+    port: 587, # ← 2525 から変更
     authentication: :plain,         # ← cram_md5 から plain に変更
     enable_starttls_auto: true      # ← STARTTLS を有効化
-    }
+  }
   # URL生成が必要なら（メール内リンク等）
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
