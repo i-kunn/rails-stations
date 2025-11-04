@@ -2,7 +2,10 @@
 
 <h1>映画上映リスト</h1>
 
-<%= render Movies::SearchFormComponent.new(params:) %>
+<%= render Movies::SearchFormComponent.new(
+      keyword:    params[:keyword],
+      is_showing: params[:is_showing]
+    ) %>
 
 <%= render Movies::TableComponent.new(movies: @movies) %>
 
