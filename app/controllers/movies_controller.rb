@@ -17,9 +17,9 @@ class MoviesController < ApplicationController
 
     # station5のコード
     latest = MovieRanking.maximum(:date)
-    @target_date = latest  
+    @target_date = latest
     @rankings = if latest
-      
+
                   MovieRanking
                     .joins(:movie)
                     .includes(:movie)

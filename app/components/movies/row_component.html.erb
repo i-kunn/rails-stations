@@ -1,0 +1,17 @@
+<%# app/components/movies/row_component.html.erb #%>
+<tr>
+  <td><%= @movie.id %></td>
+  <td><%= link_to @movie.name, movie_path(@movie) %></td>
+  <td><%= @movie.year %></td>
+  <td><%= @movie.description %></td>
+  <td>
+    <% if @movie.image_url.present? %>
+      <%= link_to @movie.image_url do %>
+        <%= image_tag @movie.image_url, alt: "#{@movie.name} 画像", width: 100 %>
+      <% end %>
+    <% end %>
+  </td>
+  <td><%= status_label %></td>
+  <td><%= l(@movie.created_at, format: :short) %></td>
+  <td><%= l(@movie.updated_at, format: :short) %></td>
+</tr>

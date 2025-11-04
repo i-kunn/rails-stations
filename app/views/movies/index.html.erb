@@ -1,66 +1,10 @@
+<%# app/views/movies/index.html.erb # %>
+
 <h1>映画上映リスト</h1>
-<form action="<%= movies_path %>" method="get">
-  <label>
-    <input type="radio" name="is_showing" value="" <%= params[:is_showing] == "" ? 'checked' : '' %>> すべて
-  </label>
-  <label>
-    <input type="radio" name="is_showing" value="1" <%= params[:is_showing] == "1" ? 'checked' : '' %>> 上映中
-  </label>
-  <label>
-    <input type="radio" name="is_showing" value="0" <%= params[:is_showing] == "0" ? 'checked' : '' %>> 公開予定
-  </label>
-  <label>
-    <input type="text" name="keyword" placeholder="キーワードを入力" value="<%= params[:keyword] %>">
-  </label>
-  <input type="submit" value="検索">
-</form>
 
+<%= render Movies::SearchFormComponent.new(params:) %>
 
-<table>
-  <tr>
-    <th>ID</th>
-    <th>タイトル</th>
-    <th>公開年</th>
-    <th>概要</th>
-    <th>画像</th>
-    <th>上映状態</th>
-    <th>作成日</th>
-    <th>更新日</th>
-  </tr>
+<%= render Movies::TableComponent.new(movies: @movies) %>
 
-  <% @movies.each do |movie| %>
-    <tr>
-      <td><%= movie.id %></td>
-      <td><%= link_to movie.name, movie_path(movie) %></td>
-      <td><%= movie.name %></td>
-      <td><%= movie.year %></td>
-      <td><%= movie.description %></td>
-      <td>
-        <a href="<%= movie.image_url %>">
-          <img src="<%= movie.image_url %>" alt="Movie Image" width="100">
-        </a>
-      </td>
-      <td><%= movie.is_showing ? '上映中' : '公開予定' %></td>
-      <td><%= movie.created_at %></td>
-      <td><%= movie.updated_at %></td>
-    </tr>
-  <% end %>
-</table>
 <h2>人気作品ランキング（過去30日）</h2>
-
-<% if @rankings.any? %>
-  <% if @target_date.present? %>
-    <p>対象日：<%= @target_date.strftime('%Y-%m-%d') %></p>
-  <% end %>
-
-  <ol>
-    <% @rankings.each do |r| %>
-      <li>
-        <%= link_to r.movie.name, movie_path(r.movie) %>
-        （予約数：<%= number_with_delimiter(r.total_reservations) %>）
-      </li>
-    <% end %>
-  </ol>
-<% else %>
-  <p>まだランキングデータがありません。まずは集計タスクを実行してください。</p>
-<% end %>
+<%= render Movies::RankingsComponent.new(rankings: @rankings, target_date: @target_date) %>

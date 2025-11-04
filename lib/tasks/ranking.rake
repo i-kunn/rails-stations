@@ -2,8 +2,8 @@ namespace :ranking do
   desc '過去30日間の予約数を作品ごとに集計して movie_rankings に保存（本日分）'
   task update: :environment do
     target     = Date.current
-    start_date = target - 30      # 30日前
-    end_date   = target - 1    
+    start_date = target - 30 # 30日前
+    end_date   = target - 1
 
     counts = Reservation
       .joins(schedule: :movie)

@@ -48,3 +48,10 @@ Style/FrozenStringLiteralComment:
 # メソッド呼び出しの折返しインデント
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact   # ← class Movies::RowComponent 形式を許可
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/components/**/*.rb'   # ← ViewComponentはsuper不要なので除外

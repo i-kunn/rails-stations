@@ -1,0 +1,20 @@
+<%# app/components/movies/search_form_component.html.erb #%>
+<form action="<%= movies_path %>" method="get">
+  <label>
+    <input type="radio" name="is_showing" value=""
+      <%= @params[:is_showing] == "" ? 'checked' : '' %>> すべて
+  </label>
+  <label>
+    <input type="radio" name="is_showing" value="1"
+      <%= @params[:is_showing] == "1" ? 'checked' : '' %>> 上映中
+  </label>
+  <label>
+    <input type="radio" name="is_showing" value="0"
+      <%= @params[:is_showing] == "0" ? 'checked' : '' %>> 公開予定
+  </label>
+  <label>
+    <input type="text" name="keyword" placeholder="キーワードを入力"
+      value="<%= @params[:keyword] %>">
+  </label>
+  <input type="submit" value="検索">
+</form>

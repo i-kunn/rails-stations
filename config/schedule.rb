@@ -41,10 +41,10 @@ job_type :rake, '
   :environment_variable=:environment /usr/local/bin/bundle exec rake :task :output
 '
 # # 19時に毎日実行
- every 1.day, at: '19:00' do
+every 1.day, at: '19:00' do
   rake 'reminder:send'
 end
-  # 本番用
+# 本番用
 every 1.day, at: '00:00' do
   rake 'ranking:update'
-end 
+end
