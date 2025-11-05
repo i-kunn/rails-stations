@@ -51,6 +51,8 @@ Layout/MultilineMethodCallIndentation:
 
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact   # ← class Movies::RowComponent 形式を許可
+  Exclude:
+  - 'config/application.rb' 
 
 Lint/MissingSuper:
   Exclude:

@@ -5,6 +5,6 @@ class Movies::SearchFormComponent < ViewComponent::Base
   end
 
   def all_selected? = @is_showing.blank?
-  def showing?      = @is_showing == "1"
-  def upcoming?     = @is_showing == "0"
+  def showing?      = @is_showing == '1'
+  def upcoming?     = @is_showing == '0'
 end
